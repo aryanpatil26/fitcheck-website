@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitCheck | Fashion. Rated by AI.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css" />
+
+  <style>
+    :root {
+      --primary: #2b2b2b;              /* dark base text color */
+      --secondary: #9c1f3e;            /* deep red accent */
+      --accent: #fdfb92;               /* pale yellow */
+      --text: #2b2b2b;                 /* base text */
+      --text-secondary: #5a5a5a;       /* soft gray for subtitles */
+      --bg-light: #fdfaf5;             /* light background */
+      --bg-secondary: #f5f5f7;         /* secondary background */
+      --shadow-light: rgba(0, 0, 0, 0.05);
+      --shadow-medium: rgba(0, 0, 0, 0.1);
+      --radius: 12px;
+      --radius-large: 980px;           /* for pill buttons */
+      --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background-color: var(--bg-light);
+      line-height: 1.5;
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--shadow-light);
+      transition: var(--transition);
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+      padding: 0 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      height: 66px;
+      width: auto;
+      transition: var(--transition);
+    }
+
+    .logo:hover {
+      opacity: 0.8;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-link {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .nav-link:hover {
+      color: var(--secondary);
+    }
+
+    .cta-button {
+      background-color: var(--secondary);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: var(--radius-large);
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .cta-button:hover {
+      background-color: #801833;
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 160px 0 120px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      letter-spacing: 0.02em;
+    }    
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(90deg, var(--text) 0%, #555555 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .primary-button {
+      background-color: var(--secondary);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: var(--radius-large);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      transform-origin: center;
+      box-shadow: 0 4px 10px rgba(156, 31, 62, 0.2);
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .primary-button:hover {
+      background-color: #801833;
+      transform: scale(1.03);
+      box-shadow: 0 6px 18px rgba(156, 31, 62, 0.3);
+    }
+
+    .secondary-button {
+      background-color: var(--accent);
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: var(--radius-large);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .secondary-button:hover {
+      background-color: #e8e682;
+      transform: translateY(-1px);
+    }
+
+    /* Features Section */
+    .features {
+      padding: 120px 0;
+      background-color: var(--bg-secondary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background-color: white;
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: 0 8px 32px var(--shadow-light);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px var(--shadow-medium);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 24px;
+      background-color: var(--bg-secondary);
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+    }
+
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .feature-description {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* App Preview Section */
+    .app-preview {
+      padding: 120px 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .preview-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .preview-subtitle {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .device-mockup {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      height: 450px;
+      margin: 0 auto;
+      background-color: #000;
+      border-radius: 40px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .device-frame {
+      border: 8px solid #1d1d1f;
+      border-radius: 40px;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .device-screen {
+      background: linear-gradient(135deg, #6e45e2, #88d3ce);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      padding: 20px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .device-screen::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-top-left-radius: 32px;
+      border-top-right-radius: 32px;
+    }
+
+    .device-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 30px;
+      background-color: #1d1d1f;
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      z-index: 3;
+    }
+
+    /* Waitlist Section */
+    .waitlist {
+      padding: 120px 0;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-light) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .waitlist-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .waitlist-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .waitlist-subtitle {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      max-width: 450px;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .waitlist-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .waitlist-input {
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 980px;
+      border: 1px solid var(--shadow-medium);
+      font-size: 1rem;
+      transition: var(--transition);
+      background-color: white;
+    }
+
+    .waitlist-input:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(156, 31, 62, 0.1);
+    }
+
+    /* Footer */
+    footer {
+      padding: 60px 0;
+      background-color: var(--bg-secondary);
+      border-top: 1px solid var(--shadow-light);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .footer-logo {
+      height: 84px;
+      width: auto;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .footer-link:hover {
+      color: var(--text);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .social-link {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      border-radius: 50%;
+      transition: var(--transition);
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .social-link:hover {
+      background-color: var(--secondary);
+      color: white;
+    }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 16px 24px;
+      background-color: #000000;
+      color: white;
+      border-radius: 16px;
+      font-weight: 500;
+      transform: translateY(120%);
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      z-index: 1000;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .notification.show {
+      transform: translateY(0);
+    }
+
+    /* Gradient blob backgrounds */
+    .gradient-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+      z-index: 1;
+    }
+
+    .blob-1 {
+      width: 600px;
+      height: 600px;
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      top: -200px;
+      right: -200px;
+    }
+
+    .blob-2 {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      bottom: -100px;
+      left: -100px;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+
+      .device-mockup {
+        height: 350px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .header-inner {
+        height: 56px;
+      }
+
+      .hero {
+        padding: 120px 0 80px;
+      }
+
+      .features,
+      .app-preview,
+      .waitlist {
+        padding: 80px 0;
+      }
+
+      .section-title,
+      .preview-title,
+      .waitlist-title {
+        font-size: 2rem;
+      }
+
+      .device-mockup {
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero-title {
+        font-size: 1.8rem;
+      }
+
+      .hero-subtitle,
+      .preview-subtitle,
+      .waitlist-subtitle {
+        font-size: 1rem;
+      }
+
+      .feature-card {
+        padding: 24px;
+      }
+
+      .device-mockup {
+        height: 220px;
+        border-radius: 24px;
+      }
+
+      .device-frame {
+        border-radius: 24px;
+      }
+
+      .device-screen::before {
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+      }
+
+      .device-notch {
+        width: 80px;
+        height: 20px;
+      }
+
+      .primary-button,
+      .secondary-button {
+        width: 100%;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-up {
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    .delay-1 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-4 {
+      animation-delay: 0.4s;
+    }
+  </style>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    // Firebase configuration - Note: In production, configure Firebase security rules
+    // to restrict database access and consider moving this to environment variables
+    const firebaseConfig = {
+      apiKey: "AIzaSyDzlOyCELobQxJ2_e_HYiUrqrLhmnGhThE",
+      authDomain: "fitcheck-b5e02.firebaseapp.com",
+      projectId: "fitcheck-b5e02",
+      storageBucket: "fitcheck-b5e02.firebasestorage.app",
+      messagingSenderId: "177021807335",
+      appId: "1:177021807335:web:aad171afe0fd61e2155042",
+      measurementId: "G-WKWMT4YFFD"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Scroll animations
+      const animateElements = document.querySelectorAll('.animate-fade-up');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      animateElements.forEach(el => {
+        el.style.animationPlayState = 'paused';
+        observer.observe(el);
+      });
+
+      // Header scroll effect
+      const header = document.querySelector('header');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
+        } else {
+          header.style.boxShadow = 'none';
+        }
+      });
+    });
+
+    window.submitEmail = async function () {
+      const emailInput = document.getElementById("email");
+      const email = emailInput.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (!email || !emailRegex.test(email)) {
+        showNotification("Please enter a valid email address");
+        emailInput.focus();
+        return;
+      }
+
+      try {
+        const button = document.querySelector('.waitlist-form .primary-button');
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Joining...';
+
+        await addDoc(collection(db, "waitlist"), {
+          email: email,
+          timestamp: new Date(),
+          source: window.location.href
+        });
+
+        showNotification("You're on the waitlist! We'll be in touch soon.");
+        emailInput.value = "";
+        
+        button.disabled = false;
+        button.textContent = originalText;
+      } catch (e) {
+        console.error("Error adding document: ", e);
+        showNotification("Something went wrong. Please try again.");
+        
+        button.disabled = false;
+        button.textContent = originalText;
+      }
+    };
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.textContent = message;
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        notification.classList.add('show');
+      }, 100);
+
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+          notification.remove();
+        }, 500);
+      }, 3000);
+    }
+  </script>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <a href="#">
+        <img src="logo.png" alt="FitCheck logo" class="logo" />
+      </a>
+      <nav class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#app" class="nav-link">The App</a>
+        <a href="#waitlist" class="nav-link">Waitlist</a>
+      </nav>
+      <a href="#waitlist" class="cta-button">Get Early Access</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="gradient-blob blob-1"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-eyebrow animate-fade-up">INTRODUCING</span>
+        <h2 class="fitcheck-logo animate-fade-up" style="font-size: 4rem; font-weight: 800; margin: 10px 0 20px; background: linear-gradient(135deg, var(--secondary) 0%, #cc2952 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.02em;">FitCheck</h2>
+        <h1 class="hero-title animate-fade-up delay-1">Elevate Your Style with AI-Powered Fashion</h1>
+        <p class="hero-subtitle animate-fade-up delay-2">
+          FitCheck uses cutting-edge AI to rate your outfits, provide personalized style recommendations,
+          and connect you with a community of fashion enthusiasts.
+        </p>
+        <div class="hero-cta animate-fade-up delay-3">
+          <a href="#waitlist" class="primary-button">Join the Waitlist</a>
+          <a href="#features" class="secondary-button">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title animate-fade-up">Smart Features for Your Style</h2>
+      <div class="features-grid">
+        <div class="feature-card animate-fade-up">
+          <div class="feature-icon">🤖</div>
+          <h3 class="feature-title">AI Style Ratings</h3>
+          <p class="feature-description">
+            Our advanced AI scores your outfit across multiple dimensions like fit, color coordination, and aesthetic appeal — instantly and objectively. No guesswork, just data-driven style.          </p>
+        </div>
+        <div class="feature-card animate-fade-up delay-1">
+          <div class="feature-icon">👕</div>
+          <h3 class="feature-title">Personalized Outfit Feedback</h3>
+          <p class="feature-description">
+            Go beyond the numbers. Get actionable insights on how to elevate your look — whether it’s refining your color palette or adjusting your silhouette. Let AI help you dress better.          </p>
+        </div>
+        <div class="feature-card animate-fade-up delay-2">
+          <div class="feature-icon">🔍</div>
+          <h3 class="feature-title">Community Voting & Style Leaderboard</h3>
+          <p class="feature-description">
+            Submit your outfit, get feedback from other users, and climb the leaderboard. Engage with a fashion-forward community that values authenticity and honest fit checks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- App Preview Section -->
+  <section class="app-preview" id="app">
+    <div class="gradient-blob blob-2"></div>
+    <div class="container">
+      <div class="preview-content">
+        <h2 class="preview-title animate-fade-up">Experience Fashion in a New Way</h2>
+        <p class="preview-subtitle animate-fade-up delay-1">
+          FitCheck combines social media with AI technology to create a seamless fashion experience.
+          Share your style, get instant feedback, and level up your wardrobe game.
+        </p>
+      </div>
+      <div class="device-mockup animate-fade-up delay-2">
+        <div class="device-frame">
+          <div class="device-notch"></div>
+          <div class="device-screen">
+            <span>FitCheck App</span>
+            <span style="font-size: 1rem; opacity: 0.8; margin-top: 8px;">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Waitlist Section -->
+  <section class="waitlist" id="waitlist">
+    <div class="container">
+      <div class="waitlist-content">
+        <h2 class="waitlist-title animate-fade-up">Be the First to Know</h2>
+        <p class="waitlist-subtitle animate-fade-up delay-1">
+          Join our exclusive waitlist for early access to FitCheck and be among the first to experience the future of fashion.
+        </p>
+        <form class="waitlist-form animate-fade-up delay-2" onsubmit="event.preventDefault(); submitEmail();">
+          <input type="email" id="email" class="waitlist-input" placeholder="Enter your email address" required />
+          <button type="submit" class="primary-button">Join the Waitlist</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <img src="logo.png" alt="FitCheck logo" class="footer-logo" />
+        <div class="footer-links">
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Terms of Service</a>
+          <a href="#" class="footer-link">Contact Us</a>
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-link" title="Twitter">𝕏</a>
+          <a href="#" class="social-link" title="Instagram">IG</a>
+          <a href="#" class="social-link" title="TikTok">TT</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
